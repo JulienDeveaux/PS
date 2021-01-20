@@ -1,53 +1,39 @@
-#include <iostream>
-#include "scalaire.h"
-#include "vecteur.h"
+package AlgLin;
 
-using namespace std;
+import java.io.*;
+import java.util.*;
 
-Vecteur::Vecteur(int n, Scalaire s) {
-	taille = n;
-	valeur = new Scalaire[n];
-	for (int i = 0; i < taille; i++) {
-		valeur[i] = s;
+public class Vecteur {
+	private int taille;
+	private Matrice composants;
+
+	Vecteur(int taille) {
+		this.taille = taille;
+		this.composants = new Matrice(taille, 1);
 	}
-}
 
-void Vecteur::free() {
-	delete valeur;
-}
-
-void Vecteur::copy(const Vecteur &v) {
-	taille = v.taille;
-	valeur = new Scalaire[taille];
-	for (int i = 0; i < taille; i++) {
-		valeur[i] = v.valeur[i];
-	}
-}
-
-Vecteur::Vecteur(const Vecteur& v) {
-	copy(v);
-}
-
-Vecteur::~Vecteur() {
-	free();
-}
-
-Vecteur& Vecteur::operator=(const Vecteur& v) {
-	if(this != &v) {
-		free();
-		copy(v);
-	}
-	return *this;
-}
-
-bool Vecteur::operator==(const Vecteur &v)const {
-	if(v.taille == taille) {
-		for (int i = 0; i < taille; i++) {
-			if(v.valeur[i] != valeur[i]) {
-				return false;
-			}
+	Vecteur(double coeff[]) {
+		this.taille = coeff.length;
+		double[][] t;
+		for(int i = 0; i < coeff.length; i++) {
+			t[i][0] = coeff[i];
 		}
-		return true;
+		this.composants = new Matrice(t);
 	}
-	return false;
+
+	Vecteur(String fichier) {
+		try {
+			Scanner sc = new Scanner(new File(fichier));
+			this.taille = sc.nextInt();
+			double[][] tab;
+			for(int i = 0; i < this.taille; i++) {
+				tab[i][0] = sc.nextDouble();
+			}
+			this.composants = new Matrice(t);
+			sc.close();
+		}
+		catch(FileNotFoundException e) {
+			Syste.out.println("Fichier absent");
+		}
+	}
 }
