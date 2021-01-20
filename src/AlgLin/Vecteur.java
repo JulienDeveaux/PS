@@ -1,9 +1,20 @@
+package AlgLin;
+
 import java.io.*;
 import java.util.*;
 
-public class Vecteur{
+public class Vecteur {
+
+	public int coefficient[];
 	private int taille;
 	private Matrice composants;
+
+	public int[] getCoefficient() {
+		return coefficient;
+	}
+	public int getTaille(){
+		return this.taille;
+	}
 
 	Vecteur(int taille) {
 		this.taille = taille;
@@ -18,6 +29,7 @@ public class Vecteur{
 		}
 		this.composants = new Matrice(t);
 	}
+
 
 	Vecteur(String fichier) {
 		try {
@@ -48,4 +60,10 @@ public class Vecteur{
 		res += "\n";
 		return res;
 	}
+
+	public static void main (String[]args){
+		Vecteur v = new Vecteur(3);
+
+	}
+
 }
