@@ -18,12 +18,12 @@ public class Vecteur {
 
 	Vecteur(int taille) {
 		this.taille = taille;
-		this.composants = new Matrice(taille, 0);
+		this.composants = new Matrice(taille, 1);
 	}
 
 	Vecteur(double coeff[]) {
 		this.taille = coeff.length;
-		double[][] t = new double[this.taille][0];
+		double[][] t = new double[this.taille][1];
 		for(int i = 0; i < coeff.length; i++) {
 			t[i][0] = coeff[i];
 		}
@@ -35,7 +35,7 @@ public class Vecteur {
 		try {
 			Scanner sc = new Scanner(new File(fichier));
 			this.taille = sc.nextInt();
-			double[][] tab = new double[this.taille][0];
+			double[][] tab = new double[this.taille][1];
 			for(int i = 0; i < this.taille; i++) {
 				tab[i][0] = sc.nextDouble();
 			}
@@ -55,15 +55,53 @@ public class Vecteur {
 		}
 		String res = "";
 		for(int i = 0; i < taille; i++) {
-			res += " " + composants.getCoef(i, 0);
+			res += composants.getCoef(i, 0) + " ";
 		}
-		res += "\n";
+		return res;
+	}
+
+	public double getCoef(int pos) {
+		return this.composants.getCoef(pos, 0);
+	}
+
+	public void remplacecoef(int pos, double coef) {
+		this.composants.remplacecoef(pos, 0, coef);
+	}
+
+	public static double produitScalaire(Vecteur v1, Vecteur v2) {
+		double res = 0;
+		int taille;
+
+		if(v1.taille < v2.taille) {
+			taille = v1.taille;
+		} else {
+			taille = v2.taille;
+		}
+
+		for(int i = 0; i < taille; i++) {
+			res += v1.getCoef(i) * v2.getCoef(i);
+		}
 		return res;
 	}
 
 	public static void main (String[]args){
 		Vecteur v = new Vecteur(3);
-
+		double c1[] = new double[3];
+		c1[0] = 1;
+		c1[1] = 2;
+		c1[2] = 3;
+		Vecteur v1 = new Vecteur(c1);
+		double c2[] = new double[3];
+		c2[0] = 4;
+		c2[1] = 5;
+		c2[2] = 6;
+		Vecteur v2 = new Vecteur(c2);
+		System.out.println(v1);
+		System.out.println(v1.getCoef(1));
+		v1.remplacecoef(1, 5.5);
+		System.out.println(v1);
+		System.out.println(v2);
+		System.out.println(produitScalaire(v1, v2));
 	}
 
 }
