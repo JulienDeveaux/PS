@@ -9,13 +9,6 @@ public class Vecteur {
 	private int taille;
 	private Matrice composants;
 
-	public int[] getCoefficient() {
-		return coefficient;
-	}
-	public int getTaille(){
-		return this.taille;
-	}
-
 	Vecteur(int taille) {
 		this.taille = taille;
 		this.composants = new Matrice(taille, 1);
@@ -60,6 +53,10 @@ public class Vecteur {
 		return res;
 	}
 
+	public int getTaille(){
+		return this.taille;
+	}
+
 	public double getCoef(int pos) {
 		return this.composants.getCoef(pos, 0);
 	}
@@ -68,15 +65,25 @@ public class Vecteur {
 		this.composants.remplacecoef(pos, 0, coef);
 	}
 
-	public static double produitScalaire(Vecteur v1, Vecteur v2) {
+	public static double verif_produitScalaire(Vecteur v1, Vecteur v2) {
 		double res = 0;
 		int taille;
 
-		if(v1.taille < v2.taille) {
-			taille = v1.taille;
+		if(v1.taille != v2.taille) {
+			throw new Exception("Les deux Vecteurs n'ont pas les mêmes dimensions");
 		} else {
-			taille = v2.taille;
+			taille = v1.taille;
 		}
+
+		for(int i = 0; i < taille; i++) {
+			res += v1.getCoef(i) * v2.getCoef(i);
+		}
+		return res;
+	}
+
+	public static double produitScalaire(Vecteur v1, Vecteur v2) {
+		double res = 0;
+		int taille = v1.taille;
 
 		for(int i = 0; i < taille; i++) {
 			res += v1.getCoef(i) * v2.getCoef(i);
