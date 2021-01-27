@@ -65,7 +65,7 @@ public class Vecteur {
 		this.composants.remplacecoef(pos, 0, coef);
 	}
 
-	public static double verif_produitScalaire(Vecteur v1, Vecteur v2) {
+	public static double verif_produitScalaire(Vecteur v1, Vecteur v2) throws Exception {
 		double res = 0;
 		int taille;
 
