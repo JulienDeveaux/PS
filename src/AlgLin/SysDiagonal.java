@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.*;
 
 public class SysDiagonal extends SysLin {
-	// Cette classe décrit unsystème linéaire diagonal
+	// Cette classe décrit un système linéaire diagonal
 	public static void main(String[] args) {
 		
 	}
