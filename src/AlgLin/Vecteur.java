@@ -1,4 +1,4 @@
-//package AlgLin;
+package AlgLin;
 
 import java.io.*;
 import java.util.*;
