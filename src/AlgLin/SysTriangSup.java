@@ -20,18 +20,17 @@ public class SysTriangSup extends SysLin{
 		System.out.println(sys.resolution());
 	}
 
-	public Vecteur resolution() throws IrregularSysLinException {
-		Vecteur resultat = new Vecteur(getMatriceSystem().nbLigne());
+	public Vecteur resolution() throws IrregularSysLinException {Vecteur resultat = new Vecteur(getMatriceSystem().nbLigne());
 
-		double sum, coeff;
+		double somme, coefficient;
 
-		for(int i=0;i<getMatriceSystem().nbLigne();i++) {
-			sum=0;
-			for(int j=0; j<i;j++) {
-				sum=sum+getMatriceSystem().getCoef(i,j)*resultat.getCoef(j);
-			}
-			coeff=(getsecondMembre().getCoef(i)-sum)/getMatriceSystem().getCoef(i, i);
-			resultat.remplacecoef(i, coeff);
+		for (int i = matriceSystem.nbLigne()-1; i >= 0; i--)
+		{
+			somme = 0;
+			for (int j = matriceSystem.nbLigne()-1; j > i; j--)
+				somme += getMatriceSystem().getCoef(i, j) * resultat.getCoef(j);
+			coefficient = (secondMembre.getCoef(i) - somme) / matriceSystem.getCoef(i, i);
+			resultat.remplacecoef(i, coefficient);
 		}
 		return resultat;
 	}
