@@ -1,7 +1,7 @@
 package AlgLin;
 
-public class SysTriangInfUnite extends SysTriangInf {
-	public static SysTriangInfUnite make(Matrice m, Vecteur v) throws Exception {
+public class SysTriangSupUnite extends SysTriangSup {
+	public static SysTriangSupUnite make(Matrice m, Vecteur v) throws Exception {
 		int  j = 0;
 		boolean b = true;
 		for(int i = 0; i < m.nbLigne(); i++) {
@@ -11,13 +11,13 @@ public class SysTriangInfUnite extends SysTriangInf {
 			j++;
 		}
 		if(b) {
-			SysTriangInfUnite sys = new SysTriangInfUnite(m, v);
+			SysTriangSupUnite sys = new SysTriangSupUnite(m, v);
 			return sys;
 		}
 		return null;
 	}
 
-	public SysTriangInfUnite(Matrice m, Vecteur v) throws Exception{
+	private SysTriangSupUnite(Matrice m, Vecteur v) throws Exception {
 		super(m, v);
 	}
 
@@ -26,8 +26,8 @@ public class SysTriangInfUnite extends SysTriangInf {
 		composants[0] = 4;
 		composants[1] = 5;
 		Vecteur vecteur = new Vecteur(composants);
-		double mat[][]= {{1, 0},{3, 1}};				//1x + 0y = 4
-		Matrice matrice = new Matrice(mat);				//3x + 1y = 5
+		double mat[][]= {{1, 3},{0, 1}};				//1x + 3y = 4
+		Matrice matrice = new Matrice(mat);				//0x + 1y = 5
 		SysLin sys = make(matrice, vecteur);
 		System.out.println(sys.resolution());
 	}
