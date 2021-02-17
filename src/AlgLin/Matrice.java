@@ -4,6 +4,8 @@ import java.io.*;
 import java.util.*;
 
 public class Matrice {
+    protected static final double EPSILON = 0.0000010;
+
     /** Définir ici les attributs de la classe **/
     protected double coefficient[][];
 

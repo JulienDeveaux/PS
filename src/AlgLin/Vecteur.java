@@ -2,6 +2,7 @@ package AlgLin;
 
 import java.io.*;
 import java.util.*;
+import java.util.regex.MatchResult;
 
 public class Vecteur {
 
@@ -87,6 +88,32 @@ public class Vecteur {
 
 		for(int i = 0; i < taille; i++) {
 			res += v1.getCoef(i) * v2.getCoef(i);
+		}
+		return res;
+	}
+
+	public static double normeL1(Vecteur v){
+		double res = 0.0;
+		for(int i = 0; i < v.taille; i++){
+			res += Math.abs(v.getCoef(i));
+		}
+		return res;
+	}
+
+	public static double normeL2(Vecteur v){
+		double res = 0.0;
+		for(int i = 0; i < v.taille; i ++){
+			res += Math.pow(Math.abs(v.getCoef(i)),2);
+		}
+		res = Math.pow(res,0.5);
+
+		return res;
+	}
+
+	public static double normeInfini(Vecteur v){
+		double res = 0.0;
+		for(int i = 0; i < v.taille; i ++) {
+			res = Math.max(res, Math.abs(v.getCoef(i)));
 		}
 		return res;
 	}
