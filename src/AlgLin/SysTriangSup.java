@@ -4,12 +4,12 @@ import java.io.*;
 import java.util.*;
 
 public class SysTriangSup extends SysLin{
-	SysTriangSup(Matrice m, Vecteur secondMembre) throws Exception {
+	SysTriangSup(Matrice m, Vecteur secondMembre) throws IrregularSysLinException  {
 		super(m, secondMembre);
 	}
 
 	// Cette classe décrit un système linéaire triangulaire supérieur.
-	public static void main(String[] args) throws Exception{
+	public static void main(String[] args) throws IrregularSysLinException {
 		double composants[] = new double[3];
 		composants[0] = 4;
 		composants[1] = 5;

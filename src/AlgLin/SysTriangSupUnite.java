@@ -1,7 +1,7 @@
 package AlgLin;
 
 public class SysTriangSupUnite extends SysTriangSup {
-	public static SysTriangSupUnite make(Matrice m, Vecteur v) throws Exception {
+	public static SysTriangSupUnite make(Matrice m, Vecteur v) throws IrregularSysLinException  {
 		int  j = 0;
 		boolean b = true;
 		for(int i = 0; i < m.nbLigne(); i++) {
@@ -17,11 +17,11 @@ public class SysTriangSupUnite extends SysTriangSup {
 		return null;
 	}
 
-	private SysTriangSupUnite(Matrice m, Vecteur v) throws Exception {
+	SysTriangSupUnite(Matrice m, Vecteur v) throws IrregularSysLinException  {
 		super(m, v);
 	}
 
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) throws IrregularSysLinException  {
 		double[] composants = new double[3];
 		composants[0] = 4;
 		composants[1] = 5;

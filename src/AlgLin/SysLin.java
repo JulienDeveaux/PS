@@ -10,13 +10,13 @@ public abstract class SysLin {
 	protected Vecteur secondMembre;				//second membre du système
 
 
-	SysLin(Matrice m, Vecteur secondMembre) throws Exception {
+	SysLin(Matrice m, Vecteur secondMembre) throws IrregularSysLinException{
 		if(m.nbLigne() == m.nbColonne()) {		//m est carrée et même taille secondM
 			this.ordre = m.nbLigne();
 			this.secondMembre = secondMembre;
 			this.matriceSystem = m;
 		} else {
-			throw new Exception("Matrice non carrée ou mauvais second membre");
+			throw new IrregularSysLinException("Matrice non carrée ou mauvais second membre");
 		}
 	}
 
@@ -32,5 +32,5 @@ public abstract class SysLin {
 		return secondMembre;
 	}
 
-	public abstract Vecteur resolution() throws IrregularSysLinException;
+	public abstract Vecteur resolution() throws IrregularSysLinException ;
 }

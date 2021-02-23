@@ -1,11 +1,24 @@
 package AlgLin;
 
-import java.io.*;
-import java.util.*;
+public class IrregularSysLinException extends Exception
+{
+	private final String message;
 
-public class IrregularSysLinException extends Exception{
-	public String toString() {
-		String res = "Le système est irrégulier";
-		return res;
+	public IrregularSysLinException()
+	{
+		this.message = null;
+	}
+
+	public IrregularSysLinException(String message)
+	{
+		this.message = message;
+	}
+
+	@Override
+	public String toString()
+	{
+		if( this.message == null || this.message.isEmpty() ) return "Le système est irrégulier !";
+
+		return this.message;
 	}
 }
