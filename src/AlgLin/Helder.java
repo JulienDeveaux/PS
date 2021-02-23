@@ -11,8 +11,11 @@ public class Helder extends SysLin {
         SysDiagonal D = new SysDiagonal(matriceSystem, secondMembre);
         SysTriangSupUnite R = new SysTriangSupUnite(matriceSystem, secondMembre);
 
+        Matrice.verif_produit(matriceSystem, L.matriceSystem);
         Matrice.produit(matriceSystem, L.matriceSystem);
+        Matrice.verif_produit(matriceSystem, D.matriceSystem);
         Matrice.produit(matriceSystem, D.matriceSystem);
+        Matrice.verif_produit(matriceSystem, R.matriceSystem);
         Matrice.produit(matriceSystem, R.matriceSystem);
     }
 
@@ -38,13 +41,26 @@ public class Helder extends SysLin {
         this.secondMembre = SecondMembre;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IrregularSysLinException {
         Matrice mat1 = new Matrice("src/resources/mat1.txt");
         Matrice mat2 = new Matrice("src/resources/mat1.txt");
         Vecteur vec1 = new Vecteur("src/resources/vec1.txt");
-
+        Matrice matRes = new Matrice(mat1.nbLigne(), mat1.nbColonne());
         System.out.println("Matrice 1 : \n" + mat1);
         System.out.println("Matrice 2 : \n" + mat2);
         System.out.println("Vecteur : \n" + vec1);
+        Helder H = new Helder(mat1,vec1);
+        System.out.println("Résultat de Ax = b: " + H.resolution());
+
+        Matrice.verif_produit(mat1, mat2);
+        matRes = Matrice.produit(mat1,mat2);
+        System.out.println("Resultat de A² :");
+        System.out.println(matRes);
+
+        System.out.println("Résultat de A² x= b");
+        Helder Hresu = new Helder(matRes,vec1);
+        System.out.println(Hresu.resolution());
+
+
     }
 }

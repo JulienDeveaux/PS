@@ -11,15 +11,17 @@ public class SysDiagonal extends SysLin {
 
 	// Cette classe décrit un système linéaire diagonal
 	public static void main(String[] args) throws IrregularSysLinException {
-		double composants[] = new double[2];
-		composants[0] = 4;
-		composants[1] = 5;
+		double composants[] = new double[3];
+		composants[0] = 2;
+		composants[1] = 1;
+		composants[2] = -13;
 		Vecteur vecteur = new Vecteur(composants);
-		double mat[][]= {{2,0},{0,3}};
+		double mat[][]= {{1,0, 0},{0,1, 0},{0,0,1}};
 		Matrice matrice = new Matrice(mat);								//2x + 0y = 4
 		SysLin sys = new SysDiagonal(matrice, vecteur);					//0x + 3y = 5
 
 		Vecteur resolution = sys.resolution();
+		System.out.println(resolution);
 		Matrice resolu = new Matrice(resolution.getTaille(), 1);
 		for(int i = 0; i < resolu.nbLigne(); i++){
 			resolu.remplacecoef(i, 0, resolution.getCoef(i));
