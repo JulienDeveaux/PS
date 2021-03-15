@@ -156,6 +156,7 @@ public class Matrice {
     public Matrice inverse() throws IrregularSysLinException{
         int ligne = 0;
         int colonne = 0;
+
         if(this.nbColonne()==this.nbLigne())
         {
             ligne = this.nbLigne();
@@ -164,35 +165,67 @@ public class Matrice {
         else{
             throw new IrregularSysLinException ("La matrice n'est pas carré");
         }
+        Matrice m = this;
+        if(determinant(m, ligne)==0){
+            System.out.println(determinant(m,ligne));
+            throw new IrregularSysLinException("La matrice n'est pas inversible");
+        }
 
 
+        Matrice inverse;
+        inverse = transpose(cofacteur(m, ligne,colonne,ligne));
+        inverse.produit( (1/determinant(m,ligne)));
+
+
+        return inverse;
+    }
+
+    private int determinant(Matrice mat , int n ){
+        int determinant = 0;
+        int signe = 1;
+        Matrice temp = new Matrice(nbLigne(),nbColonne());
+        for(int i = 0; i < n; i++){
+            determinant += signe * temp.coefficient[0][i] * determinant(temp,n - 1);
+            signe = -signe;
+        }
+        return determinant;
+    }
+
+    private Matrice cofacteur(Matrice mat, int p , int q ,int n ){
+        int i = 0, j = 0;
+        Matrice temp = new Matrice(nbLigne(),nbColonne());
+
+        for(int ligne = 0; ligne < n; ligne++){
+            for(int colonne = 0; colonne < n ; colonne++){
+                if(ligne != p && colonne != q){
+                    temp.coefficient[i][j++] = mat.coefficient[ligne][colonne];
+                    if( j == i -1){
+                        j = 0;
+                        i++;
+                    }
+                }
+            }
+        }
+        return temp;
+    }
+
+    private Matrice transpose(Matrice mat) {
+        Matrice tmat = new Matrice(mat.nbLigne(), mat.nbColonne());
+        for (int i = 0; i < mat.nbLigne(); i++) {
+            for (int j = 0; j < mat.nbColonne(); j++) {
+                tmat.coefficient[i][j] = tmat.coefficient[j][i];
+            }
+        }
+        return tmat;
     }
 
 
 
     public static void main(String[] args) throws Exception {
-        double mat[][]= {{2,1},{0,1}};
+        double mat[][]= {{2,3},{0,4}};
         Matrice a = new Matrice(mat);
-        System.out.println("construction d'une matrice par affectation d'un tableau :\n"+a);
-        Matrice b = new Matrice("matrice1.txt");
-        System.out.println("Construction d'une matrice par lecture d'un fichier :\n"+b);
-        Matrice c = new Matrice(2,2);
-        c.recopie(b);
-        System.out.println("Recopie de la matrice b :\n"+c);
-        System.out.println("Nombre de lignes et colonnes de la matrice c : "+c.nbLigne()+
-                ", "+c.nbColonne());
-        System.out.println("Coefficient (2,2) de la matrice b : "+b.getCoef(1, 1));
-        System.out.println("Nouvelle valeur de ce coefficient : 8");
-        b.remplacecoef(1, 1, 8);
-        System.out.println("Vérification de la modification du coefficient");
-        System.out.println("Coefficient (2,2) de la matrice b : "+b.getCoef(1, 1));
-        System.out.println("Addition de 2 matrices : affichage des 2 matrices "+
-                "puis de leur addition");
-        System.out.println("matrice 1 :\n"+a+"matrice 2 :\n"+b+"somme :\n"+
-                Matrice.addition(a,b));
-        System.out.println("Produit de 2 matrices : affichage des 2 matrices "+
-                "puis de leur produit");
-        System.out.println("matrice 1 :\n"+a+"matrice 2 :\n"+b+"produit :\n"+
-                produit(a,b));
+        a.inverse();
+        System.out.println(a);
+
     }
 }
