@@ -153,6 +153,22 @@ public class Matrice {
         return mat;
     }
 
+    public Matrice inverse() throws IrregularSysLinException{
+        int ligne = 0;
+        int colonne = 0;
+        if(this.nbColonne()==this.nbLigne())
+        {
+            ligne = this.nbLigne();
+            colonne = this.nbColonne();
+        }
+        else{
+            throw new IrregularSysLinException ("La matrice n'est pas carré");
+        }
+
+
+    }
+
+
 
     public static void main(String[] args) throws Exception {
         double mat[][]= {{2,1},{0,1}};
