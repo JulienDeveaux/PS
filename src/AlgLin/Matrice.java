@@ -219,7 +219,9 @@ public class Matrice {
         return tmat;
     }
 
-
+    public void calculAvecUneFonction(FonctionGenerale fonc) {
+        fonc.evaluationDeLaFonction();
+    }
 
     public static void main(String[] args) throws Exception {
         double mat[][]= {{2,3},{0,4}};
