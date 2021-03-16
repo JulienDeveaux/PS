@@ -1,5 +1,5 @@
 package AlgLin;
 
 public interface FonctionGenerale {
-	public void evaluationDeLaFonction();
+	public double evaluationDeLaFonction(Matrice m);
 }
