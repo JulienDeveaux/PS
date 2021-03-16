@@ -11,6 +11,7 @@ public class HilbertMatrice {
 		int ordre = scanner.nextInt();
 		HilbertMatrice matrice = new HilbertMatrice(ordre);
 		System.out.println(matrice);
+
 	}
 
 	public HilbertMatrice(int taille) {
