@@ -5,12 +5,14 @@ import java.util.Scanner;
 public class HilbertMatrice {
 	private final Matrice hilbertMat;
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IrregularSysLinException {
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("Ordre de la matrice Hilbert : ");
 		int ordre = scanner.nextInt();
 		HilbertMatrice matrice = new HilbertMatrice(ordre);
-		System.out.println(matrice);
+		System.out.println("Matrice de hilbert générée : \n" + matrice);
+		System.out.println("Matrice de hilbert inversée : \n" + matrice.hilbertMat.inverse());
+		//System.out.println("Vérification en multipliant les deux matrices obtenuers : \n" + (Matrice.produit(matrice, matrice.hilbertMat.inverse())));
 	}
 
 	public HilbertMatrice(int taille) {
