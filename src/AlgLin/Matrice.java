@@ -157,7 +157,7 @@ public class Matrice {
         if(this.nbLigne() != this.nbColonne()) {
             throw new IrregularSysLinException("Matrice non carrée");
         }
-        return transpose(cofactorMatrice(this)).produit(1/determinant(this));
+        return transpose(cofacteur()).produit(1/determinant(this));
     }
 
     private double determinant(Matrice mat){
@@ -188,18 +188,15 @@ public class Matrice {
         return determinant;
     }
 
-    public double cofactor(int ii, int jj, Matrice mat){
-        return Math.pow(-1,ii+jj)*(determinant(mat.sousMatrice(ii,jj)));
-    }
+    public Matrice cofacteur(){
+        Matrice res = new Matrice(nbLigne(), nbColonne());
 
-    public Matrice cofactorMatrice(Matrice mat){
-        double[][] comatrix = new double[ mat.nbLigne() ][ mat.nbColonne() ];
-        for(int i = 0; i < mat.nbLigne(); i++ ){
-            for(int j = 0; j < mat.nbColonne() - 1; j++ ){
-                comatrix[i][j] = mat.cofactor(i,j, mat);
+        for(int i = 0; i < nbLigne(); i ++){
+            for (int j = 0; j < nbColonne(); j++){
+                res.remplacecoef(i, j , Math.pow(-1, i + j) *determinant(sousMatrice(i,j)));
             }
         }
-        return new Matrice(comatrix);
+        return res;
     }
 
     public Matrice sousMatrice(int ii, int jj){
@@ -221,13 +218,14 @@ public class Matrice {
     }
 
     private Matrice transpose(Matrice mat) {
-        Matrice tmat = new Matrice(mat.nbLigne(), mat.nbColonne());
+        Matrice temp =  new Matrice(nbLigne(),nbColonne());
+        temp.recopie(mat);
         for (int i = 0; i < mat.nbLigne(); i++) {
             for (int j = 0; j < mat.nbColonne(); j++) {
-                tmat.coefficient[i][j] = tmat.coefficient[j][i];
+                temp.coefficient[i][j] = mat.coefficient[j][i];
             }
         }
-        return tmat;
+        return temp;
     }
 
 
@@ -256,7 +254,7 @@ public class Matrice {
     }
 
     public static void main(String[] args) throws Exception {
-        double mat[][]= {{2,3},{0,6}};
+        double mat[][]= {{2,3, 4},{5,6,8}, {7,2,1}};
         Matrice a = new Matrice(mat);
         System.out.println(a);
         System.out.println(a.determinant(a));

@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class HilbertMatrice {
 	private final Matrice hilbertMat;
 
-	public static void main(String[] args) throws IrregularSysLinException {
+	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("Ordre de la matrice Hilbert : ");
 		int ordre = scanner.nextInt();
