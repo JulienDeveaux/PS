@@ -166,27 +166,44 @@ public class Matrice {
             throw new IrregularSysLinException ("La matrice n'est pas carré");
         }
         Matrice m = this;
-        if(determinant(m, ligne)==0){
-            System.out.println(determinant(m,ligne));
+        if(determinant(m)==0){
+            System.out.println(determinant(m));
             throw new IrregularSysLinException("La matrice n'est pas inversible");
         }
 
 
         Matrice inverse;
         inverse = transpose(cofacteur(m, ligne,colonne,ligne));
-        inverse.produit( (1/determinant(m,ligne)));
+        inverse.produit( (1/determinant(m)));
 
 
         return inverse;
     }
 
-    private int determinant(Matrice mat , int n ){
-        int determinant = 0;
-        int signe = 1;
-        Matrice temp = new Matrice(nbLigne(),nbColonne());
-        for(int i = 0; i < n; i++){
-            determinant += signe * temp.coefficient[0][i] * determinant(temp,n - 1);
-            signe = -signe;
+    private double determinant(Matrice mat){
+        double determinant = 0;
+        Matrice temp;
+        if(mat.nbLigne() == 1) {
+            determinant = mat.getCoef(0, 0);
+            return determinant;
+        }
+        if(mat.nbLigne() == 2) {
+            determinant = (mat.getCoef(0, 0) * mat.getCoef(1, 1) - (mat.getCoef(0, 1) * mat.getCoef(1, 0)));
+            return determinant;
+        }
+        for(int i = 0; i < mat.nbLigne(); i++) {
+            temp = new Matrice(mat.nbLigne() - 1, mat.nbColonne() - 1);
+
+            for(int j = 1; j < mat.nbLigne(); j++) {
+                for(int k = 0; k < mat.nbColonne(); k++) {
+                    if(k < i) {
+                        temp.remplacecoef(j - 1, k, mat.getCoef(j, k));
+                    } else if(k > i) {
+                        temp.remplacecoef(j - 1, k - 1, mat.getCoef(j, k));
+                    }
+                }
+            }
+            determinant += mat.getCoef(0, i) * Math.pow(-1, (double) i) * determinant(temp);
         }
         return determinant;
     }
@@ -224,7 +241,7 @@ public class Matrice {
     }
 
     public static void main(String[] args) throws Exception {
-        double mat[][]= {{2,3},{0,4}};
+        double mat[][]= {{2,3, 3, 6, 8},{0,6, 9, 6, 8}, {0, 6, 7, 6, 8}, {1, 2, 3, 4, 8}, {1, 2, 3, 4, 5}};
         Matrice a = new Matrice(mat);
         a.inverse();
         System.out.println(a);
