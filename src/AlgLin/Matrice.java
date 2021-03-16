@@ -183,7 +183,7 @@ public class Matrice {
                     }
                 }
             }
-            determinant += mat.getCoef(0, i) * Math.pow(-1, (double) i) * determinant(temp);
+            determinant += mat.getCoef(0, i) * Math.pow(-1, i) * determinant(temp);
         }
         return determinant;
     }
@@ -241,28 +241,25 @@ public class Matrice {
         return res;
     }
 
-    public double norme_inf(){
+    public double norme_inf() {
         double res = 0.0;
-        for(int i = 0; i < this.nbLigne(); i ++) {
-            for(int j = 0; j < nbColonne(); j ++){
-                res = Math.max(res, Math.abs(this.getCoef(i,j)));
+        for (int i = 0; i < this.nbLigne(); i++) {
+            for (int j = 0; j < nbColonne(); j++) {
+                res = Math.max(res, Math.abs(this.getCoef(i, j)));
             }
         }
         return res;
     }
 
-    public void calculAvecUneFonction(FonctionGenerale fonc) throws IrregularSysLinException {
-        fonc.evaluationDeLaFonction();
-    }
-
-    public void conditionnement(){
-   //norme de A * norme de l'inverse de A
+    public double conditionnement(FonctionGenerale fonc) throws IrregularSysLinException {
+        return fonc.evaluationDeLaFonction(this) * fonc.evaluationDeLaFonction(this.inverse());
     }
 
     public static void main(String[] args) throws Exception {
         double mat[][]= {{2,3},{0,6}};
         Matrice a = new Matrice(mat);
         System.out.println(a);
-        System.out.println(a.inverse());
+        System.out.println(a.determinant(a));
+        System.out.println("\n" + a.conditionnement(new LaFonctionUtilisee(0)));
     }
 }
