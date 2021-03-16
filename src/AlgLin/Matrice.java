@@ -170,8 +170,7 @@ public class Matrice {
             System.out.println(determinant(m));
             throw new IrregularSysLinException("La matrice n'est pas inversible");
         }
-
-
+        System.out.println(determinant(m));
         Matrice inverse;
         inverse = transpose(cofacteur(m, ligne,colonne,ligne));
         inverse.produit( (1/determinant(m)));
@@ -208,6 +207,24 @@ public class Matrice {
         return determinant;
     }
 
+    private Matrice sousMatrice(int x, int y){
+        Matrice res = new Matrice(nbLigne() - 1, nbColonne() - 1);
+
+        for (int i = 0; i < nbLigne()-1; i++){
+            if(i == x) {
+                continue;
+            }
+            for(int j = 0; j < nbColonne()-1; j++){
+                if(j == y) {
+                    continue;
+                }
+                res.remplacecoef(i, j, this.getCoef(i,j));
+            }
+        }
+
+        return res;
+    }
+
     private Matrice cofacteur(Matrice mat, int p , int q ,int n ){
         int i = 0, j = 0;
         Matrice temp = new Matrice(nbLigne(),nbColonne());
@@ -236,12 +253,37 @@ public class Matrice {
         return tmat;
     }
 
-    public void calculAvecUneFonction(FonctionGenerale fonc) {
+
+    public double norme_1(){
+        double res = 0.0;
+        for(int i = 0; i < this.nbLigne(); i++){
+            for(int j = 0; j < this.nbColonne(); j++){
+                res += Math.abs(this.getCoef(i, j));
+            }
+        }
+        return res;
+    }
+
+    public double norme_inf(){
+        double res = 0.0;
+        for(int i = 0; i < this.nbLigne(); i ++) {
+            for(int j = 0; j < nbColonne(); j ++){
+                res = Math.max(res, Math.abs(this.getCoef(i,j)));
+            }
+        }
+        return res;
+    }
+
+    public void calculAvecUneFonction(FonctionGenerale fonc) throws IrregularSysLinException {
         fonc.evaluationDeLaFonction();
     }
 
+    public void conditionnement(){
+   //norme de A * norme de l'inverse de A
+    }
+
     public static void main(String[] args) throws Exception {
-        double mat[][]= {{2,3, 3, 6, 8},{0,6, 9, 6, 8}, {0, 6, 7, 6, 8}, {1, 2, 3, 4, 8}, {1, 2, 3, 4, 5}};
+        double mat[][]= {{1.0,-2.0, 4.0},{3.0,5.0, -1.0},{2.0,6.0,-3.0}};
         Matrice a = new Matrice(mat);
         a.inverse();
         System.out.println(a);
