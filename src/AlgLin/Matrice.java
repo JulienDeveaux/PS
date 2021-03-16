@@ -154,6 +154,9 @@ public class Matrice {
     }
 
     public Matrice inverse() throws IrregularSysLinException{
+        if(this.nbLigne() != this.nbColonne()) {
+            throw new IrregularSysLinException("Matrice non carrée");
+        }
         return transpose(cofactorMatrice(this)).produit(1/determinant(this));
     }
 
@@ -257,7 +260,7 @@ public class Matrice {
     }
 
     public static void main(String[] args) throws Exception {
-        double mat[][]= {{2,3, 3, 6, 8},{0,6, 9, 6, 8}, {0, 6, 7, 6, 8}, {1, 2, 3, 4, 8}, {1, 2, 3, 4, 5}};
+        double mat[][]= {{2,3},{0,6}};
         Matrice a = new Matrice(mat);
         System.out.println(a);
         System.out.println(a.inverse());
