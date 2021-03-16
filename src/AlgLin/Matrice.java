@@ -154,29 +154,7 @@ public class Matrice {
     }
 
     public Matrice inverse() throws IrregularSysLinException{
-        int ligne = 0;
-        int colonne = 0;
-
-        if(this.nbColonne()==this.nbLigne())
-        {
-            ligne = this.nbLigne();
-            colonne = this.nbColonne();
-        }
-        else{
-            throw new IrregularSysLinException ("La matrice n'est pas carré");
-        }
-        Matrice m = this;
-        if(determinant(m)==0){
-            System.out.println(determinant(m));
-            throw new IrregularSysLinException("La matrice n'est pas inversible");
-        }
-        System.out.println(determinant(m));
-        Matrice inverse;
-        inverse = transpose(cofacteur(m, ligne,colonne,ligne));
-        inverse.produit( (1/determinant(m)));
-
-
-        return inverse;
+        return transpose(cofactorMatrice(this)).produit(1/determinant(this));
     }
 
     private double determinant(Matrice mat){
@@ -207,40 +185,36 @@ public class Matrice {
         return determinant;
     }
 
-    private Matrice sousMatrice(int x, int y){
-        Matrice res = new Matrice(nbLigne() - 1, nbColonne() - 1);
-
-        for (int i = 0; i < nbLigne()-1; i++){
-            if(i == x) {
-                continue;
-            }
-            for(int j = 0; j < nbColonne()-1; j++){
-                if(j == y) {
-                    continue;
-                }
-                res.remplacecoef(i, j, this.getCoef(i,j));
-            }
-        }
-
-        return res;
+    public double cofactor(int ii, int jj, Matrice mat){
+        return Math.pow(-1,ii+jj)*(determinant(mat.sousMatrice(ii,jj)));
     }
 
-    private Matrice cofacteur(Matrice mat, int p , int q ,int n ){
-        int i = 0, j = 0;
-        Matrice temp = new Matrice(nbLigne(),nbColonne());
+    public Matrice cofactorMatrice(Matrice mat){
+        double[][] comatrix = new double[ mat.nbLigne() ][ mat.nbColonne() ];
+        for(int i = 0; i < mat.nbLigne(); i++ ){
+            for(int j = 0; j < mat.nbColonne() - 1; j++ ){
+                comatrix[i][j] = mat.cofactor(i,j, mat);
+            }
+        }
+        return new Matrice(comatrix);
+    }
 
-        for(int ligne = 0; ligne < n; ligne++){
-            for(int colonne = 0; colonne < n ; colonne++){
-                if(ligne != p && colonne != q){
-                    temp.coefficient[i][j++] = mat.coefficient[ligne][colonne];
-                    if( j == i -1){
-                        j = 0;
-                        i++;
-                    }
+    public Matrice sousMatrice(int ii, int jj){
+        Matrice sousMat = new Matrice(this.nbColonne() - 1, this.nbLigne() - 1);
+        for(int i = 0; i < this.nbColonne(); i++ ){
+            for(int j = 0; j < this.nbLigne(); j++ ){
+                if(i<ii && j<jj) {
+                    sousMat.remplacecoef(i, j, this.getCoef(i, j));
+                } else if(i>ii && j<jj) {
+                    sousMat.remplacecoef(i - 1, j, this.getCoef(i, j));
+                } else if(i<ii && j>jj) {
+                    sousMat.remplacecoef(i, j - 1, this.getCoef(i, j));
+                } else if(i>ii && j>jj) {
+                    sousMat.remplacecoef(i - 1, j - 1, this.getCoef(i, j));
                 }
             }
         }
-        return temp;
+        return sousMat;
     }
 
     private Matrice transpose(Matrice mat) {
@@ -283,10 +257,9 @@ public class Matrice {
     }
 
     public static void main(String[] args) throws Exception {
-        double mat[][]= {{1.0,-2.0, 4.0},{3.0,5.0, -1.0},{2.0,6.0,-3.0}};
+        double mat[][]= {{2,3, 3, 6, 8},{0,6, 9, 6, 8}, {0, 6, 7, 6, 8}, {1, 2, 3, 4, 8}, {1, 2, 3, 4, 5}};
         Matrice a = new Matrice(mat);
-        a.inverse();
         System.out.println(a);
-
+        System.out.println(a.inverse());
     }
 }
