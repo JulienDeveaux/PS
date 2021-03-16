@@ -259,5 +259,6 @@ public class Matrice {
         System.out.println(a);
         System.out.println(a.determinant(a));
         System.out.println("\n" + a.conditionnement(new LaFonctionUtilisee(0)));
+        System.out.println("\n" + a.conditionnement(new LaFonctionUtilisee(1)));
     }
 }
